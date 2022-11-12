@@ -9,6 +9,8 @@ public class RubyController : MonoBehaviour
     public int maxHealth = 5;
     
     public GameObject projectilePrefab;
+    public GameObject HealthIncreasePrefab;
+    public GameObject HealthDecreasePrefab;
     
     public AudioClip throwSound;
     public AudioClip hitSound;
@@ -102,8 +104,16 @@ public class RubyController : MonoBehaviour
             
             isInvincible = true;
             invincibleTimer = timeInvincible;
+
+            //this might be a good place to instantiate your "damage" particles
+            GameObject HealthDecreaseObject = Instantiate(HealthDecreasePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
             
             PlaySound(hitSound);
+        }
+
+        if (amount > 0)
+        {
+            GameObject HealthIncreaseObject = Instantiate(HealthIncreasePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
         }
         
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
@@ -117,7 +127,7 @@ public class RubyController : MonoBehaviour
 
         Projectile projectile = projectileObject.GetComponent<Projectile>();
         projectile.Launch(lookDirection, 300);
-
+        
         animator.SetTrigger("Launch");
         
         PlaySound(throwSound);
