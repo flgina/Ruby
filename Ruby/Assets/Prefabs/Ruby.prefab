@@ -244,8 +244,9 @@ MonoBehaviour:
   HealthDecreasePrefab: {fileID: 1895056415230258765, guid: 68502798c4514c14bb91a92cff7a9f1c, type: 3}
   throwSound: {fileID: 8300000, guid: b2edfd40873655249ba0e01a5cf705be, type: 3}
   hitSound: {fileID: 8300000, guid: 9b1bb1f450b7d444fa4a8019d13519a7, type: 3}
-  winSound: {fileID: 8300000, guid: 1de21c1f49f7fbd4290be23178274a6f, type: 3}
-  loseSound: {fileID: 0}
+  winSound: {fileID: 8300000, guid: 8e887d40b5ffbf64ea43d212a32b7096, type: 3}
+  loseSound: {fileID: 8300000, guid: 69c92def668aa3649ad35eb87073e203, type: 3}
+  backgroundSound: {fileID: 8300000, guid: e406c04157c663a43b859646b7ad3c2a, type: 3}
   timeInvincible: 2
   scoreText: {fileID: 1024329748738792274}
   GameOverTextObject: {fileID: 2621872461980435763}

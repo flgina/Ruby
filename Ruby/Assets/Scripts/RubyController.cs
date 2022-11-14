@@ -19,6 +19,7 @@ public class RubyController : MonoBehaviour
     public AudioClip hitSound;
     public AudioClip winSound;
     public AudioClip loseSound;
+    public AudioClip backgroundSound;
     
     public int health { get { return currentHealth; }}
     int currentHealth;
@@ -54,6 +55,9 @@ public class RubyController : MonoBehaviour
         // Set the text property of the Win Text UI to an empty string, making the 'You Win' (game over message) blank
         scoreText.text = "Robots Fixed: " + score.ToString() + "/5";
         GameOverTextObject.text = "";
+
+        audioSource.clip = backgroundSound;
+        audioSource.Play();
     }
 
     // Update is called once per frame
@@ -104,8 +108,6 @@ public class RubyController : MonoBehaviour
             GameOverTextObject.text = "You Win!\nGame Created by Gina Lofoco\nPress R to restart";
             
             gameOver = true;
-
-            PlaySound(winSound);
         }
         
         if (currentHealth == 0)
@@ -114,18 +116,14 @@ public class RubyController : MonoBehaviour
 
             gameOver = true;
 
-            speed = 0;
-
-            PlaySound(loseSound);
+            speed = 0;;
         }
 
         if (Input.GetKey(KeyCode.R))
         {
             if (gameOver == true)
             {
-
               SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // this loads the currently active scene
-
             }
         }
     }
@@ -142,7 +140,7 @@ public class RubyController : MonoBehaviour
     public void ChangeHealth(int amount)
     {
         if (amount < 0)
-        {
+        {            
             if (isInvincible)
                 return;
             
@@ -159,6 +157,15 @@ public class RubyController : MonoBehaviour
         {
             GameObject HealthIncreaseObject = Instantiate(HealthIncreasePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
         }
+
+        if (currentHealth == 0)
+        {
+            audioSource.clip = backgroundSound;
+            audioSource.Stop();
+
+            audioSource.clip = loseSound;
+            audioSource.Play();
+        }
         
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         
@@ -172,6 +179,15 @@ public class RubyController : MonoBehaviour
             score += scoreAmount;
             scoreText.text = "Robots Fixed: " + score.ToString() + "/5";
             Debug.Log("Robots Fixed: " + score);
+        }
+
+        if (scoreAmount == 5)
+        {           
+            audioSource.clip = backgroundSound;
+            audioSource.Stop();
+
+            audioSource.clip = winSound;
+            audioSource.Play();
         }
 	}
     
