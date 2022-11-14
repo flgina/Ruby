@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// Include the namespace required to use Unity UI and Input System
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class RubyController : MonoBehaviour
 {
@@ -14,6 +17,8 @@ public class RubyController : MonoBehaviour
     
     public AudioClip throwSound;
     public AudioClip hitSound;
+    public AudioClip winSound;
+    public AudioClip loseSound;
     
     public int health { get { return currentHealth; }}
     int currentHealth;
@@ -30,6 +35,11 @@ public class RubyController : MonoBehaviour
     Vector2 lookDirection = new Vector2(1,0);
     
     AudioSource audioSource;
+
+    private int score = 0;
+    public TextMeshProUGUI scoreText;
+	public TextMeshProUGUI GameOverTextObject;
+    bool gameOver;
     
     // Start is called before the first frame update
     void Start()
@@ -40,6 +50,10 @@ public class RubyController : MonoBehaviour
         currentHealth = maxHealth;
 
         audioSource = GetComponent<AudioSource>();
+
+        // Set the text property of the Win Text UI to an empty string, making the 'You Win' (game over message) blank
+        scoreText.text = "Robots Fixed: " + score.ToString() + "/5";
+        GameOverTextObject.text = "";
     }
 
     // Update is called once per frame
@@ -84,6 +98,36 @@ public class RubyController : MonoBehaviour
                 }
             }
         }
+
+        if (score == 5)
+        {
+            GameOverTextObject.text = "You Win!\nGame Created by Gina Lofoco\nPress R to restart";
+            
+            gameOver = true;
+
+            PlaySound(winSound);
+        }
+        
+        if (currentHealth == 0)
+        {
+            GameOverTextObject.text = "You Lost!\n Press R to restart";
+
+            gameOver = true;
+
+            speed = 0;
+
+            PlaySound(loseSound);
+        }
+
+        if (Input.GetKey(KeyCode.R))
+        {
+            if (gameOver == true)
+            {
+
+              SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // this loads the currently active scene
+
+            }
+        }
     }
     
     void FixedUpdate()
@@ -120,6 +164,16 @@ public class RubyController : MonoBehaviour
         
         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
     }
+
+    public void ChangeScore(int scoreAmount)
+	{
+        if (scoreAmount > 0)
+        {
+            score += scoreAmount;
+            scoreText.text = "Robots Fixed: " + score.ToString() + "/5";
+            Debug.Log("Robots Fixed: " + score);
+        }
+	}
     
     void Launch()
     {
