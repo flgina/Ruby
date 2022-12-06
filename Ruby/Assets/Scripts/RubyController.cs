@@ -57,6 +57,7 @@ public class RubyController : MonoBehaviour
         GameOverTextObject.text = "";
 
         audioSource.clip = backgroundSound;
+        audioSource.loop = true;
         audioSource.Play();
     }
 
@@ -108,6 +109,8 @@ public class RubyController : MonoBehaviour
             GameOverTextObject.text = "You Win!\nGame Created by Gina Lofoco\nPress R to restart";
             
             gameOver = true;
+
+            speed = 0;
         }
         
         if (currentHealth == 0)
@@ -116,7 +119,7 @@ public class RubyController : MonoBehaviour
 
             gameOver = true;
 
-            speed = 0;;
+            speed = 0;
         }
 
         if (Input.GetKey(KeyCode.R))
@@ -158,7 +161,7 @@ public class RubyController : MonoBehaviour
             GameObject HealthIncreaseObject = Instantiate(HealthIncreasePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
         }
 
-        if (currentHealth == 0)
+        if (currentHealth <= 0)
         {
             audioSource.clip = backgroundSound;
             audioSource.Stop();
@@ -181,7 +184,7 @@ public class RubyController : MonoBehaviour
             Debug.Log("Robots Fixed: " + score);
         }
 
-        if (scoreAmount == 5)
+        if (score == 5)
         {           
             audioSource.clip = backgroundSound;
             audioSource.Stop();

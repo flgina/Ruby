@@ -22,7 +22,7 @@ public class SoundManagerScript : MonoBehaviour
         
     }
 
-    /*public static void PlaySound(string clip)
+    public static void PlaySound(string clip)
     {
         switch(clip)
         {
@@ -30,6 +30,6 @@ public class SoundManagerScript : MonoBehaviour
                 audioSrc.PlayOneShot(winSound);
                 break;
         }
-    }*/
+    }
 }
 
