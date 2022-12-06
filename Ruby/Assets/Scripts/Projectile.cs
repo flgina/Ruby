@@ -41,5 +41,15 @@ public class Projectile : MonoBehaviour
         }
     
         Destroy(gameObject);
+
+        {
+            RubyController controller = other.gameObject.GetComponent<RubyController>();
+            {
+                if (controller != null)
+                {
+                    controller.Changescore(1);
+                }
+            }
+        }
     }
 }
