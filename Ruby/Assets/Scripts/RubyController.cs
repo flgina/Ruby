@@ -71,8 +71,12 @@ public class RubyController : MonoBehaviour
         currentHealth = maxHealth;
 
         // cherry
-        cherries = 0;
-        cherryText.text = "Cherries: " + cherries.ToString() + "/5";
+        cherryText.text = "";
+        if (level == 2)
+        {
+            cherries = 0;
+            cherryText.text = "Cherries: " + cherries.ToString() + "/5";
+        }
 
         audioSource = GetComponent<AudioSource>();
 
@@ -177,6 +181,8 @@ public class RubyController : MonoBehaviour
             GameOverTextObject.text = "You Lost!\n Press R to restart";
 
             gameOver = true;
+
+            speed = 0;
         }
 
         if (Input.GetKey(KeyCode.R))
